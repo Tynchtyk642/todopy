@@ -6,17 +6,91 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="POST">
-        <h3>Загаловок </h3>
-        <input type="text" name="title" placeholder="Загаловок">
-        <h3>Подзагаловок</h3>
-        <input type="text" name="subtitle" placeholder="Подзагаловок">
-        <h3>Описание</h3>
-        <input type="text" name="description" placeholder="Описание">
-        <!-- <h2><input type="number" name="prise" placeholder="Цена"></h2>
-        <h2><input type="text" name="genre" placeholder="Жанр"></h2>
-        <h2><input type="text" name="author" placeholder="Автор"></h2>
-        <h2><input type="datetime-local" name="year" placeholder="Год"></h2> -->
+    <form action="{% url 'add_book'%}" method="POST">
+        {% csrf_token %}
+        <h1 class="add">Добавить книгу</h1>
+        <h3 class="title">Загаловок </h3>
+        <input class="inputs" type="text" name="title" placeholder="Загаловок">
+        <h3 class="title">Подзагаловок</h3>
+        <input class="inputs" type="text" name="subtitle" placeholder="Подзагаловок">
+        <h3 class="title">Описание</h3>
+        <input class="inputs" type="text" name="description" placeholder="Описание">
+        <h3 class="title">Цена</h3>
+        <input class="inputs" type="number" name="price" placeholder="Цена">
+        <h3 class="title">Жанр</h3>
+        <input class="inputs" type="text" name="genre" placeholder="Жанр">
+        <h3 class="title">Автор</h3>
+        <input class="inputs" type="text" name="author" placeholder="Автор">
+        <h3 class="title">Год</h3>
+        <input class="inputs" type="datetime-local" name="year" placeholder="Год">
+        <h3 ><button class="button">Добавить</button></h3>
+
+        {% for book in books %}
+            <div class="result">
+                <h3>{{ book.title}} - {{ book.author }}</h3>
+                <h4>{{ book.price }}</h4>
+            </div>
+            <hr/>
+        {% endfor %}
     </form>
+
+    <style>
+        .add{
+            padding:12px 20px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 4px double black;
+            border-radius: 5px;
+            width: fit-content;
+            background-color: yellow;
+            font-family: Arial, Helvetica, sans-serif;
+            color: black;
+        }
+
+        .title{
+            font-family: Arial, Helvetica, sans-serif;
+            
+        }
+
+        .inputs{
+            padding:12px 20px;
+            border: 2px solid black;
+            border-radius: 10px;
+            background-color: rgb(231, 209, 209);
+            font-size: 20px;
+            width: 40%;
+            color: grey;
+            height: 30px;
+        }
+        .inputs:hover{
+            background-color:white;
+            color: black;
+        }
+
+        .button{
+            padding:12px 20px;
+            background-color: rgb(184, 61, 81);
+            border: 1px solid rgb(68, 19, 29);
+            color: rgb(248, 248, 247);
+            font-size: 18px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 3px;
+            cursor: pointer;
+            
+        }
+
+        .button:active{
+            border: 1px solid rgb(247, 182, 193);
+            box-shadow: 2px 2px 5px 3px rgb(253, 253, 253);
+           
+        }
+
+        .result{
+            border: 3px double black ;
+            background-color: rgb(122, 230, 224);
+            text-align: center;
+        }
+    </style>
 </body>
 </html>
