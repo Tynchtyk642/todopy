@@ -28,10 +28,31 @@ def add_book(request):
         price=form["price"],
         genre=form["genre"],
         author=form["author"],
-        year=form["year"][:10]
+        year=form["year"][:10],
     )
     book.save()
     return redirect(books)
+
+def delete_books(request,id):
+    book = Book.objects.get(id=id)
+    book.delete()
+    return redirect(books)
+
+def mark_books(request,id):
+    book = Book.objects.get(id=id)
+    book.is_favorite = True
+    book.save()
+    return redirect(books)
+
+def unmark_books(request,id):
+    book = Book.objects.get(id=id)
+    book.is_favorite = False
+    book.save()
+    return redirect(books)   
+
+def books_detail(request,id):
+    books_detail_object = Book.objects.get(id=id)
+    return render(request, "books_detail.html", {"books_detail_object":books_detail_object})
 
 def add_todo(request):
     form = request.POST
@@ -44,3 +65,16 @@ def delete_todo(request, id):
     todo = ToDo.objects.get(id=id)
     todo.delete()
     return redirect(test)
+
+def mark_todo(request,id):
+    todo = ToDo.objects.get(id=id)
+    todo.is_favorite = False
+    todo.save()
+    return redirect(test)
+
+def unmark_todo(request,id):
+    todo = ToDo.objects.get(id=id)
+    todo.is_favorite = True
+    todo.save()
+    return redirect (test)
+

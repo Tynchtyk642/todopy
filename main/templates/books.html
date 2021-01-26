@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,14 +26,33 @@
         <input class="inputs" type="datetime-local" name="year" placeholder="Год">
         <h3 ><button class="button">Добавить</button></h3>
 
-        {% for book in books %}
-            <div class="result">
-                <h3>{{ book.title}} - {{ book.author }}</h3>
-                <h4>{{ book.price }}</h4>
-            </div>
-            <hr/>
-        {% endfor %}
     </form>
+    <hr>
+        {% for book in books %}
+        <div class="result
+            {% if book.is_favorite %}
+                marked
+            {% endif %}
+        ">
+
+            
+                <h3>{{ book.title}} - {{ book.author }}</h3>
+                <h4>{{ book.price }}</h4> 
+            
+
+                <div class="books_item_footer">
+                    <a href="{% url 'delete-books'  book.id %}"><button class="delete">Удалить</button></a>
+                    {% if book.is_favorite %}
+                        
+                        <a href="{% url 'mark-books' book.id%}"><button id="mark">Довбавить в избранные</button></a>
+                    {% else %}
+                        <a href="{% url 'unmark-books' book.id%}"><button class="unfavorite">Удалить из избранных</button></a>
+                    {% endif %}
+
+                    <p><a href="{% url 'books-detail' book.id%}"><button class="details">Перейти к деталям книги</button></a></p>
+        </div>
+    </hr>
+        {% endfor %}
 
     <style>
         .add{
@@ -87,10 +107,54 @@
         }
 
         .result{
-            border: 3px double black ;
-            background-color: rgb(122, 230, 224);
+            border: 1px solid black ;
+            background-color: rgba(228, 250, 176, 0.993);
+            margin-left: auto;
+            margin-right: auto;
+            width: fit-content;
             text-align: center;
         }
+
+        
+        .books_item_footer img{
+        width: 50px;
+        height: 50px;
+        
+        cursor: pointer;
+
+        }
+
+        .delete{
+            border: 1px solid black;
+            padding:12px 20px ;
+            background-color: red;
+            cursor: pointer;
+        }
+
+        
+        .unfavorite{
+            border: 1px solid black;
+            padding: 12px 20px;
+            background-color: rgb(136, 136, 255);
+            cursor: pointer;
+        }
+
+        #mark{
+            border: 1px solid black;
+            padding: 12px 20px;
+            background-color: orange;
+            cursor: pointer;
+        }
+
+        .details{
+            font-weight: bold;
+            font-size: 20px;
+            border: 1px solid black;
+            padding: 12px 18px;
+            background-color: rgb(26, 141, 235);
+            cursor: pointer;
+        }
+
     </style>
 </body>
 </html>
